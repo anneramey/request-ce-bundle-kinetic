@@ -1,0 +1,452 @@
+import React, { Fragment } from 'react';
+import { KappLink as Link, PageTitle } from 'common';
+import { connect } from '../../redux/store';
+import { compose, lifecycle, withHandlers, withState } from 'recompose';
+import { actions } from '../../redux/modules/submissions';
+import { actions as CommentaryActions } from '../../redux/modules/commentaryApp';
+import { push } from 'connected-react-router';
+import { createSubmission } from '@kineticdata/react';
+import { RequestCard } from '../shared/RequestCard';
+import { getSubmissionPath } from '../../utils';
+import { I18n } from '@kineticdata/react';
+import { List } from 'immutable';
+
+const handleKingdomChange = setCurrentKingdom => e =>
+  setCurrentKingdom(e.target.value);
+
+const handleMonthChange = setCurrentMonth => e =>
+  setCurrentMonth(e.target.value);
+
+const monthOptions = [
+  { value: 'January', label: 'January' },
+  { value: 'February', label: 'February' },
+  { value: 'March', label: 'March' },
+  { value: 'April', label: 'April' },
+  { value: 'May', label: 'May' },
+  { value: 'June', label: 'June' },
+  { value: 'July', label: 'July' },
+  { value: 'August', label: 'August' },
+  { value: 'September', label: 'September' },
+  { value: 'October', label: 'October' },
+  { value: 'November', label: 'November' },
+  { value: 'December', label: 'December' },
+];
+
+const handleYearChange = setCurrentYear => e => setCurrentYear(e.target.value);
+
+const yearOptions = [
+  { value: '2020', label: '2020' },
+  { value: '2021', label: '2021' },
+  { value: '2022', label: '2022' },
+  { value: '2023', label: '2023' },
+  { value: '2024', label: '2024' },
+  { value: '2025', label: '2025' },
+  { value: '2026', label: '2026' },
+  { value: '2027', label: '2027' },
+  { value: '2028', label: '2028' },
+  { value: '2029', label: '2029' },
+  { value: '2030', label: '2030' },
+  { value: '2031', label: '2031' },
+];
+
+const SelectableCard = props => {
+  return (
+    <div style={{ backgroundColor: 'white' }}>
+      <input
+        checked={props.submission.isChecked}
+        onChange={props.handleCheckBoxSelect}
+        type="checkbox"
+        value={props.submission.id}
+        data-list-name={props.listName}
+        data-func-name={props.listFuncName}
+      />
+      <RequestCard {...props} />
+    </div>
+  );
+};
+
+export const NewILoI = ({
+  loi,
+  fetchNewSubmissions,
+  createNewLoi,
+  kingdoms,
+  currentKingdom,
+  currentMonth,
+  currentYear,
+  setCurrentKingdom,
+  setCurrentMonth,
+  setCurrentYear,
+  navigate,
+  handleCheckBoxSelect,
+  availableSelected,
+  handleMoveSubILoi,
+  handleListAction,
+  localAvailableList,
+  subIloiList,
+}) => {
+  //console.log("state", state, submissions);
+  // const fetchedSubmissions = submissions ? submissions : [];
+  //console.log('currentKingdom ', currentKingdom, currentMonth, currentYear);
+  return (
+    <Fragment>
+      <PageTitle parts={[]} />
+      <div className="page-container page-container--newiloi container">
+        <div className="row">
+          <div className="form-group col-4">
+            <label htmlFor="Kingdom">
+              <I18n>Kingdom</I18n>
+            </label>
+            <select
+              id="Kingdom"
+              name="Kingdom"
+              className="form-control"
+              onChange={handleKingdomChange(setCurrentKingdom)}
+              value={currentKingdom}
+            >
+              <option value="">
+                <I18n>None Selected</I18n>
+              </option>
+              {kingdoms.map(kingdom => (
+                <option value={kingdom.name} key={`${kingdom.name}`}>
+                  {kingdom.name}
+                </option>
+              ))}
+            </select>
+            <small>
+              <I18n>Kingdom this letter is for.</I18n>
+            </small>
+          </div>
+          <div className="col-2">
+            <I18n>letter for</I18n>
+          </div>
+          <div className="form-group col-4">
+            <label htmlFor="Month">
+              <I18n>Month</I18n>
+            </label>
+            <select
+              id="Month"
+              name="Month"
+              className="form-control"
+              onChange={handleMonthChange(setCurrentMonth)}
+              value={currentMonth}
+            >
+              <option value="">
+                <I18n>None Selected</I18n>
+              </option>
+              {monthOptions.map(month => (
+                <option value={month.label} key={`${month.label}`}>
+                  {month.value}
+                </option>
+              ))}
+            </select>
+            <small>
+              <I18n>Month this letter is for.</I18n>
+            </small>
+          </div>
+          <div className="form-group col-2">
+            <label htmlFor="Year">
+              <I18n>Year</I18n>
+            </label>
+            <select
+              id="Year"
+              name="Year"
+              className="form-control"
+              onChange={handleYearChange(setCurrentYear)}
+              value={currentYear}
+            >
+              <option value="">
+                <I18n>None Selected</I18n>
+              </option>
+              {yearOptions.map(year => (
+                <option value={year.label} key={`${year.label}`}>
+                  {year.value}
+                </option>
+              ))}
+            </select>
+            <small>
+              <I18n>Year this letter is for.</I18n>
+            </small>
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col-5">
+            <button
+              onClick={handleListAction}
+              value="localAvailableList"
+              data-action="add"
+              data-func-name="setlocalAvailableList"
+            >
+              Select All
+            </button>
+            <button
+              onClick={handleListAction}
+              value="localAvailableList"
+              data-action="remove"
+              data-func-name="setlocalAvailableList"
+            >
+              Remove All
+            </button>
+            <div className="page-title">
+              <div className="page-title__wrapper">
+                <h3>Available Requests</h3>
+              </div>
+            </div>
+            {localAvailableList.size > 0 ? (
+              localAvailableList
+                .map((submission, index) => ({
+                  submission,
+                  index,
+                  key: submission.id,
+                  path: getSubmissionPath(
+                    '/kapps/services',
+                    submission,
+                    'review',
+                    'Open',
+                  ),
+                  deleteCallback: fetchNewSubmissions,
+                  handleCheckBoxSelect,
+                  listName: 'localAvailableList',
+                  listFuncName: 'setlocalAvailableList',
+                }))
+                .map(props => <SelectableCard key={props.id} {...props} />)
+            ) : (
+              <div className="card card--empty-state">
+                <h1>There are no requests pending ILoI.</h1>
+              </div>
+            )}
+          </div>
+          <div className="col-2">
+            <button
+              onClick={handleMoveSubILoi}
+              data-source-name="localAvailableList"
+              data-source-func-name="setlocalAvailableList"
+              data-dest-name="subIloiList"
+              data-dest-func-name="setSubIloiList"
+            >
+              <i className="fa fa-chevron-right" aria-hidden="true" />
+              <i className="fa fa-chevron-right" aria-hidden="true" />
+            </button>
+            <button
+              onClick={handleMoveSubILoi}
+              data-source-name="subIloiList"
+              data-source-func-name="setSubIloiList"
+              data-dest-name="localAvailableList"
+              data-dest-func-name="setlocalAvailableList"
+            >
+              <i className="fa fa-chevron-left" aria-hidden="true" />
+              <i className="fa fa-chevron-left" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="col-5">
+            <button
+              onClick={handleListAction}
+              value="subIloiList"
+              data-action="add"
+              data-func-name="setSubIloiList"
+            >
+              Select All
+            </button>
+            <button
+              onClick={handleListAction}
+              value="subIloiList"
+              data-action="remove"
+              data-func-name="setSubIloiList"
+            >
+              Remove All
+            </button>
+            <div className="page-title">
+              <div className="page-title__wrapper">
+                <h3>ILoI /</h3>
+              </div>
+            </div>
+            <div>
+              {subIloiList.size > 0 ? (
+                subIloiList
+                  .map((submission, index) => ({
+                    submission,
+                    index,
+                    key: submission.id,
+                    path: getSubmissionPath(
+                      '/kapps/services',
+                      submission,
+                      'review',
+                      'Open',
+                    ),
+                    deleteCallback: fetchNewSubmissions,
+                    handleCheckBoxSelect,
+                    listName: 'subIloiList',
+                    listFuncName: 'setSubIloiList',
+                  }))
+                  .map(props => <SelectableCard {...props} />)
+              ) : (
+                <div className="card card--empty-state">
+                  <h1>There are no requests in this ILoI.</h1>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col-10" />
+        <div className="col-2">
+          <button
+            type="button"
+            className="btn btn-primary pull-right"
+            onClick={() =>
+              createNewLoi(
+                loi,
+                navigate,
+                currentKingdom,
+                currentMonth,
+                currentYear,
+              )
+            }
+          >
+            Create Draft ILoi
+          </button>
+        </div>
+      </div>
+    </Fragment>
+  );
+};
+
+/***********************************************************************************
+ * dThe following three functions manage the selection of subIloi's and the movement
+ * of subIloi's between lists.  All function are generic and driven off the data
+ * attributes of the events that triggered them.
+ *
+ * data-list-name = The name of the list that the event relates to.
+ * data-func-name = The name of the function that acts on the list
+ * data-source-name = The name of the list that subIloi's will be moving from
+ * data-source-func-name = The name of the function that acts on the list
+ * data-dest-name = The name of the list that subIloi's will be moving to
+ * data-dest-func-name = The name of the function that acts on the list
+ * data-action = If checkbox's will be selected or deselected
+ */
+const handleCheckBoxSelect = props => event => {
+  const listName = event.target.getAttribute('data-list-name');
+  props[event.target.getAttribute('data-func-name')](
+    props[listName].update(
+      props[listName].findIndex(
+        submission => submission.id == event.target.value,
+      ),
+      submission => ({ ...submission, isChecked: !submission.isChecked }),
+    ),
+  );
+};
+const handleMoveSubILoi = props => event => {
+  const sourceName = event.currentTarget.getAttribute('data-source-name');
+  // Get a list of submissions before the submission object is mutated
+  const notChecked = props[sourceName].filter(
+    submission => !submission.isChecked,
+  );
+  props[event.currentTarget.getAttribute('data-dest-func-name')](
+    props[event.currentTarget.getAttribute('data-dest-name')].concat(
+      props[sourceName]
+        .filter(submission => submission.isChecked)
+        .map(submission => ({ ...submission, isChecked: false })),
+    ),
+  );
+  props[event.currentTarget.getAttribute('data-source-func-name')](notChecked);
+};
+const handleListAction = props => event => {
+  props[event.target.getAttribute('data-func-name')](
+    props[event.target.value].map(submission => ({
+      ...submission,
+      isChecked:
+        event.target.getAttribute('data-action') == 'add' ? true : false,
+    })),
+  );
+};
+/*********************************************************************************/
+
+const createNewLoi = ({
+  loi,
+  navigate,
+  currentKingdom,
+  currentMonth,
+  currentYear,
+  //  setError,
+}) => async e => {
+  //  e.preventDefault();
+  console.log('createNewLoi', loi, currentKingdom);
+  //const loiList = loi.map(submission => submission.id);
+  //try {
+  const newSubmission = await createSubmission({
+    kappSlug: 'commentary',
+    formSlug: 'iloi',
+    values: {
+      //  'JSON of Requests': JSON.stringify(loiList),
+      'JSON of Requests': [],
+      Kingdom: currentKingdom,
+      Title:
+        currentKingdom +
+        ' Internal Letter for ' +
+        currentMonth +
+        ', ' +
+        currentYear,
+      Month: currentMonth,
+      Year: currentYear,
+    },
+    authAssumed: true,
+    completed: false,
+  });
+
+  navigate(`/kapps/commentary/loi/${newSubmission.submission.id}`);
+};
+
+const mapStateToProps = state => ({
+  available: state.submissions.available,
+  loi: state.submissions.loi,
+  kingdoms: state.commentaryApp.kingdoms,
+  thisstate: state,
+  currentKingdom: state.commentaryApp.currentKingdom,
+  currentMonth: state.commentaryApp.currentMonth,
+  currentYear: state.commentaryApp.currentYear,
+});
+
+const mapDispatchToProps = {
+  fetchHeraldicSubmissions: actions.fetchHeraldicSubmissions,
+  fetchKingdoms: CommentaryActions.fetchKingdoms,
+  setCurrentKingdom: CommentaryActions.setCurrentKingdom,
+  setCurrentMonth: CommentaryActions.setCurrentMonth,
+  setCurrentYear: CommentaryActions.setCurrentYear,
+  updateLoi: actions.updateLoi,
+};
+
+export const NewILoIContainer = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  withState('localAvailableList', 'setlocalAvailableList', List()),
+  withState('subIloiList', 'setSubIloiList', List()),
+  withHandlers({
+    createNewLoi,
+    handleCheckBoxSelect,
+    handleMoveSubILoi,
+    handleListAction,
+  }),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchHeraldicSubmissions();
+      this.props.fetchKingdoms();
+    },
+    componentDidUpdate(prevProps) {
+      // TODO: do a deep comparison to know that available array has diff elements
+      if (this.props.available.length != prevProps.available.length) {
+        this.props.setlocalAvailableList(
+          this.props.localAvailableList.concat(
+            this.props.available.map(submission => ({
+              ...submission,
+              isChecked: false,
+            })),
+          ),
+        );
+      }
+    },
+  }),
+)(NewILoI);

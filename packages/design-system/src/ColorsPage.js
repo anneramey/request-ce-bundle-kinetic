@@ -48,10 +48,10 @@ export const ColorsPage = () => (
               style={{ backgroundColor: 'rgb(9, 84, 130)' }}
             />
             <div className="card--color__body">
-              <h2>$blue-lake</h2>
+              <h2>$green-dark</h2>
               <dl>
                 <dt>SCSS</dt>
-                <dd>$blue-lake </dd>
+                <dd>$green-dark </dd>
                 <dt>RGB</dt>
                 <dd>rgb(9, 84, 130)</dd>
                 <dt>HEX</dt>

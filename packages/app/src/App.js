@@ -17,6 +17,7 @@ import QueueApp from 'queue';
 import TechBarApp from 'tech-bar';
 import DiscussionsApp from 'discussions';
 import SettingsApp from 'settings';
+import CommentaryApp from 'commentary';
 // TODO Remove ScaffoldApp
 import ScaffoldApp from 'scaffold';
 import { AppProvider } from './AppProvider';
@@ -27,6 +28,7 @@ const BUNDLE_PACKAGE_PROVIDERS = {
   queue: QueueApp,
   'tech-bar': TechBarApp,
   scaffold: ScaffoldApp,
+  commentary: CommentaryApp,
 };
 
 const getAppProvider = (kapp, pathname) => {

@@ -31,7 +31,7 @@ module.exports = {
         pattern.replace('/src', '/**/src'),
       ),
       transformIgnorePatterns: [
-        '[/\\\\]node_modules[/\\\\](?!common|app|services|space|queue|discussions).+\\.(js|jsx|mjs)$',
+        '[/\\\\]node_modules[/\\\\](?!common|app|services|space|queue|discussions|commentary).+\\.(js|jsx|mjs)$',
       ],
     };
   },

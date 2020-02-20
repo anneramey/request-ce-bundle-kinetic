@@ -24,7 +24,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@kineticdata/react@^0.1.0-alpha.9-hotfix":
+"@kineticdata/react@^0.1.0-alpha.9", "@kineticdata/react@^0.1.0-alpha.9-hotfix":
   version "0.1.0-alpha.9-hotfix"
   resolved "https://registry.yarnpkg.com/@kineticdata/react/-/react-0.1.0-alpha.9-hotfix.tgz#8d81e89a4c4987477cc7aee049e2a8e2430a1c44"
   integrity sha512-JjEy0x3+vUKYTdXFYcT+fGGEvcZFeOBy5wvHnbfLAOftpT29ukGZtSsxGFRm/e6D4Meeqm8HVsOyItpbRkw/yQ==

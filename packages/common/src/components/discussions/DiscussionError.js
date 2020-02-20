@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import wallyMissingImage from 'common/src/assets/images/wally-missing.svg';
+import wallyMissingImage from 'common/src/assets/images/logo.png';
 
 const errors = {
   Unauthorized: "Sorry, you don't have access to this discussion",

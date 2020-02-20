@@ -6,7 +6,7 @@
   position: relative;
 
   .general {
-    color: $blue-lake;
+    color: $green-dark;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -38,7 +38,7 @@
     }
 
     pre {
-      color: $blue-lake;
+      color: $green-dark;
       font-size: 0.75rem;
       line-height: 1.5rem;
       margin-bottom: 0;
@@ -72,7 +72,7 @@
       text-align: center;
       padding: 1.5em;
       h5 {
-        color: $blue-lake;
+        color: $green-dark;
         font-size: 14px;
         font-size: 1.25rem;
         font-weight: 600;
@@ -100,7 +100,7 @@
         color: rgba($gray80, 0.5);
       }
       .value {
-        color: $blue-lake;
+        color: $green-dark;
         margin-left: 0.25rem;
       }
       &:not(:last-child):after {

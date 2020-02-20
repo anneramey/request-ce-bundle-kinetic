@@ -1,6 +1,6 @@
 import React from 'react';
-import wallyHappyImage from 'common/src/assets/images/wally-happy.svg';
-import wallyMissingImage from 'common/src/assets/images/wally-missing.svg';
+import wallyHappyImage from 'common/src/assets/images/logo.png';
+import wallyMissingImage from 'common/src/assets/images/logo.png';
 import { QueueListItemSmall } from './QueueListItem';
 import { TOO_MANY_STATUS_STRING } from '../../redux/sagas/queue';
 import { Constants, GroupDivider } from 'common';

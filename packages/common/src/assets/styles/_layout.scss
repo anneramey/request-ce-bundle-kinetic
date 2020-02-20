@@ -49,7 +49,7 @@
         }
       }
       &--white {
-        background-color: $white;
+        background-color: $green-pale;
       }
       &--flex {
         display: flex;
@@ -148,7 +148,7 @@
 
 .group-divider {
   align-items: center;
-  color: $blue-lake;
+  color: $green-dark;
   display: flex;
   font-size: 0.875rem;
   font-weight: bold;

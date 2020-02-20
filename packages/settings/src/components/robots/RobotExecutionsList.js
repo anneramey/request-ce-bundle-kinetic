@@ -5,7 +5,7 @@ import { push } from 'redux-first-history';
 import { compose, lifecycle, withHandlers } from 'recompose';
 import moment from 'moment';
 import { Constants, Loading } from 'common';
-import wallyHappyImage from 'common/src/assets/images/wally-happy.svg';
+import wallyHappyImage from 'common/src/assets/images/logo.png';
 
 import { isActiveClass } from '../../utils';
 import { actions } from '../../redux/modules/settingsRobots';

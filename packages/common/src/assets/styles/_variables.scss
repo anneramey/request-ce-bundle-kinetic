@@ -15,6 +15,9 @@ $blue-lake: rgb(9, 84, 130) !default; // #095482
 $blue-slate: rgb(12, 56, 79) !default; // #0C384F
 $blue-sky: rgb(11, 168, 224) !default; // #0BA8E0
 $green-grass: rgb(0, 212, 106) !default; // #00D46A
+$green-dark: rgb(2, 61, 17) !default; //#023d11
+$green-medium: rgb(109, 175, 126) !default; //#6daf7e
+$green-pale: rgb(194, 225, 185) !default; //#c2e1b9
 $green: rgb(102, 225, 65) !default; // #66E041
 $green-teal: rgb(2, 212, 177) !default; // #02D4B1
 $orange: rgb(255, 153, 28) !default; // #FF991C
@@ -30,9 +33,9 @@ $sunflower: rgb(255, 207, 74) !default; // #FFCF4A
 $black: rgb(0, 0, 0) !default; // #000000
 $white: rgb(255, 255, 255) !default; // #ffffff
 $gray: rgb(126, 128, 131) !default; // #7e8083
-$primary: $blue-lake !default; // #095482
-$secondary: $orange-kinops !default; // #ff7700
-$tertiary: $blue-gray !default; // #a8b7c7
+$primary: $green-pale !default; // #095482
+$secondary: $yellow !default; // #ff7700
+$tertiary: $green-dark !default; // #a8b7c7
 $success: $green-grass !default; // #00d46a
 $danger: $red !default; // #fa3a37
 $warning: $sunflower !default; // #ffcf4a
@@ -42,7 +45,7 @@ $gray90: darken($gray, 40%) !default; // #1a1a1b
 $gray80: darken($gray, 30%) !default; // #333435 (previously $black)
 $gray70: darken($gray, 20%) !default; // #4c4d4f
 $gray60: darken($gray, 10%) !default; // #656769
-$gray50: $gray !default; // #7e8083 (previously $black-50 and $gray)
+$gray80: $gray !default; // #7e8083 (previously $black-50 and $gray)
 $gray40: lighten($gray, 10%) !default; // #989a9c
 $gray30: lighten($gray, 20%) !default; // #b2b3b5
 $gray20: lighten($gray, 30%) !default; // #cccdce
@@ -57,10 +60,10 @@ $gray3: lighten($gray, 46.5%) !default; // #f7f7f7 (previously $black-3)
 $gray2: lighten($gray, 47.75%); // #fafafa
 $primary70: darken($primary, 20%) !default; // #021623
 $primary60: darken($primary, 10%) !default;
-
 // #063552
 $primary50: $primary !default; // #095482
-$primary40: lighten($primary, 10%) !default; // #0c73b2
+$primary40: lighten($primary, 10%) !default;
+// #0c73b2
 $primary30: lighten($primary, 20%) !default; // #1092e1
 $secondary70: darken($secondary, 20%) !default; // #994700
 $secondary60: darken($secondary, 10%) !default; // #cc5f00
@@ -96,7 +99,7 @@ $info40: lighten($info, 10%) !default; // #1bb4ec
 $info30: lighten($info, 20%) !default; // #4ac4f0
 // Text, link, border, background colors
 $text-color: $gray80 !default; // Global text color on `<body>`.
-$link-color: $blue-lake !default; // Global textual link color.
+$link-color: $green-dark !default; // Global textual link color.
 $border-color: $gray16 !default; // Global border color.
 $bg1: $gray3 !default;
 $bg2: $gray6 !default;

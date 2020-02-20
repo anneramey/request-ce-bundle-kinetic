@@ -29,7 +29,7 @@
   display: table-header-group;
   font-weight: 700;
   span {
-    border-bottom: 1px solid $gray50;
+    border-bottom: 1px solid $gray80;
   }
 }
 
@@ -51,14 +51,14 @@ table.table--settings {
           font-weight: 600;
         }
         > small {
-          color: $gray50;
+          color: $gray80;
         }
         > .list-dropdown {
           & > button {
             padding: 0;
-            color: $gray50;
+            color: $gray80;
             &:hover {
-              color: darken($gray50, 5%);
+              color: darken($gray80, 5%);
             }
           }
         }
@@ -144,7 +144,7 @@ thead.sortable {
 }
 
 tfoot {
-  border-top: 1px solid $gray50;
+  border-top: 1px solid $gray80;
   background: $gray3;
   padding: 1rem;
   position: relative;

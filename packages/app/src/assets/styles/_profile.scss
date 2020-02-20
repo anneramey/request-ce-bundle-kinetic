@@ -4,9 +4,9 @@
 .profile-menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  color: $blue-lake;
+  color: $green-dark;
   a {
-    color: $blue-lake;
+    color: $green-dark;
     text-decoration: none;
   }
   .profile-header {
@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: column;
     a {
-      color: $gray50;
+      color: $gray80;
       &:hover {
         background-color: lighten($gray8, 5%);
       }

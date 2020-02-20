@@ -8,7 +8,7 @@ import {
   DropdownItem,
 } from 'reactstrap';
 import { TimeAgo } from 'common';
-import wallyHappyImage from 'common/src/assets/images/wally-happy.svg';
+import wallyHappyImage from 'common/src/assets/images/logo.png';
 import { actions } from '../../../redux/modules/forms';
 import { I18n } from '@kineticdata/react';
 import { connect } from '../../../redux/store';

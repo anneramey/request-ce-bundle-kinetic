@@ -3,7 +3,7 @@ import { Link } from '@reach/router';
 import { connect } from 'react-redux';
 import { push } from 'redux-first-history';
 import { compose, lifecycle, withHandlers, withState } from 'recompose';
-import wallyHappyImage from 'common/src/assets/images/wally-happy.svg';
+import wallyHappyImage from 'common/src/assets/images/logo.png';
 import papaparse from 'papaparse';
 import { fromJS } from 'immutable';
 import downloadjs from 'downloadjs';

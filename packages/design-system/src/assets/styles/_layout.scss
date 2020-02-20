@@ -89,20 +89,20 @@
   &--body {
     height: 8rem;
     flex: 1 1 100%;
-    background-color: lighten($blue-lake, 25%);
+    background-color: lighten($green-dark, 25%);
     border-radius: $border-radius-base;
   }
   &--page-panels {
     flex: 1 1 100%;
     // padding: 1%;
-    // background-color: lighten($blue-lake, 1%);
+    // background-color: lighten($green-dark, 1%);
   }
 
   &--two-thirds {
     height: 8rem;
     flex: 1 0 65.666667%;
     border-radius: $border-radius-base;
-    background-color: lighten($blue-lake, 25%);
+    background-color: lighten($green-dark, 25%);
   }
 
   &--one-thirds {
@@ -110,19 +110,19 @@
     flex: 0 0 33.3333%;
     margin-left: 1%;
     border-radius: $border-radius-base;
-    background-color: lighten($blue-lake, 15%);
+    background-color: lighten($green-dark, 15%);
   }
   // 60/40
   &--three-fifths {
     flex: 1 0 59%;
-    background-color: lighten($blue-lake, 25%);
+    background-color: lighten($green-dark, 25%);
     border-radius: $border-radius-base;
   }
 
   &--two-fifths {
     flex: 0 0 40%;
     margin-left: 1%;
-    background-color: lighten($blue-lake, 15%);
+    background-color: lighten($green-dark, 15%);
     border-radius: $border-radius-base;
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from '@reach/router';
 import { TeamsListItem } from './TeamsListItem';
-import wallyHappyImage from 'common/src/assets/images/wally-happy.svg';
+import wallyHappyImage from 'common/src/assets/images/logo.png';
 import { I18n } from '@kineticdata/react';
 import { PageTitle } from '../shared/PageTitle';
 

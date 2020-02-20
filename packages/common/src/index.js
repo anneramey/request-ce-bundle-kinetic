@@ -12,6 +12,7 @@ import { ErrorNotFound } from './components/ErrorNotFound';
 import { ErrorUnauthorized } from './components/ErrorUnauthorized';
 import { ErrorUnexpected } from './components/ErrorUnexpected';
 import { WallySpinner } from './components/WallySpinner';
+import { HeraldicSpinner } from './components/HeraldicSpinner';
 import { SchedulersList } from './components/scheduler/SchedulersList';
 import { Scheduler } from './components/scheduler/Scheduler';
 import { CreateScheduler } from './components/scheduler/CreateScheduler';
@@ -116,6 +117,7 @@ export {
   ErrorUnauthorized,
   ErrorUnexpected,
   WallySpinner,
+  HeraldicSpinner,
   AttributeSelectors,
   SchedulersList,
   Scheduler,

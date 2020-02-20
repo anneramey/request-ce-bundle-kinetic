@@ -140,7 +140,7 @@
     font-weight: 500;
     padding: 0.5rem 1.25rem;
     .fa {
-      color: $gray50;
+      color: $gray80;
     }
   }
 
@@ -246,12 +246,12 @@
             position: absolute;
             left: -3rem;
             top: 0;
-            color: $gray50;
+            color: $gray80;
             font-size: 3rem;
             font-weight: bold;
           }
           small {
-            color: $gray50;
+            color: $gray80;
             white-space: nowrap;
           }
         }

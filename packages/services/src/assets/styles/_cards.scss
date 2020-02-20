@@ -26,7 +26,7 @@
   }
 
   p {
-    color: $gray50;
+    color: $gray80;
     font-size: 1rem;
     line-height: 1.5rem;
     margin-bottom: 0;
@@ -49,7 +49,7 @@
   }
 
   p {
-    color: $gray50;
+    color: $gray80;
     font-size: 0.9375rem;
     line-height: 1rem;
     padding: 0.625rem 0;
@@ -60,7 +60,7 @@
   }
 
   .fa.edit {
-    color: $gray50;
+    color: $gray80;
     line-height: 1.5rem;
   }
 
@@ -101,7 +101,7 @@
   flex: 0 0 auto;
 
   &--gray {
-    background-color: $gray50;
+    background-color: $gray80;
   }
 
   &--yellow {

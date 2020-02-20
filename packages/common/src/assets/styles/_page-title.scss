@@ -8,7 +8,7 @@
   flex: 1 1 100%;
   h1 {
     margin-top: 0;
-    color: $blue-slate;
+    color: $tertiary;
     font-size: 2rem;
     font-weight: 300;
     line-height: 3rem;
@@ -22,13 +22,13 @@
     }
   }
   h3 {
-    color: $orange-kinops;
+    color: $secondary;
     font-size: 0.9375rem;
     font-weight: 700;
     letter-spacing: 1px;
     line-height: 1.5rem;
     a {
-      color: $orange-kinops;
+      color: $secondary;
       font-size: 0.9375rem;
       font-weight: 700;
       letter-spacing: 1px;
@@ -70,9 +70,9 @@
     }
   }
   > a:not(.btn) {
-    color: $gray50;
+    color: $gray80;
     &:hover {
-      color: $blue-lake;
+      color: $tertiary;
     }
   }
   @media all and (min-width: 0) {
@@ -94,18 +94,18 @@
   font-weight: 600;
   padding: 0 0.75rem;
   margin: 0 0 1rem 0;
-  border-top: 2px solid $gray16;
+  border-top: 2px solid $white;
   form &,
   .form & {
     margin-left: -0.75rem;
     margin-right: -0.75rem;
   }
-  > a,
-  > .fa {
-    color: $gray50;
+  a,
+  .fa {
+    color: $gray80;
     font-size: 0.75rem;
     &:hover {
-      color: $blue-lake;
+      color: $tertiary;
     }
   }
 

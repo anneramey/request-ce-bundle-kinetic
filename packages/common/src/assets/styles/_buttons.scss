@@ -44,7 +44,11 @@ input[type='button'],
 .btn-primary {
   @extend .btn;
   color: $white;
-  @include setButtonColorAndHover($primary);
+  @include setButtonColorAndHover($green-dark);
+  // &:not(:disabled):not(.disabled):active,
+  // &:not(:disabled):not(.disabled).active {
+  //   @include setButtonColorAndHover($primary);
+  // }
   &.disabled,
   &[disabled] {
     background-color: lighten($primary, 5%);
@@ -55,7 +59,7 @@ input[type='button'],
 // Secondary Button
 .btn-secondary {
   @extend .btn;
-  color: $white;
+  color: $green-dark;
   @include setButtonColorAndHover($secondary);
   &.disabled,
   &[disabled] {
@@ -128,7 +132,7 @@ input[type='button'],
 .btn-icon {
   border: 0;
   background-color: transparent;
-  color: $gray50;
+  color: $gray80;
   &:hover {
     color: $primary;
   }

@@ -13,15 +13,15 @@
 .page-item.active .page-link {
   z-index: 1;
   color: $white;
-  background-color: $blue-lake;
-  border-color: $blue-lake;
+  background-color: $green-dark;
+  border-color: $green-dark;
   &:hover {
     color: $white;
-    background-color: $blue-lake;
+    background-color: $green-dark;
   }
 }
 .page-link {
-  color: $blue-lake;
+  color: $green-dark;
   background-color: $white;
   border-color: $gray10;
   &:hover {

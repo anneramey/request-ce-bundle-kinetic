@@ -19,15 +19,11 @@ export const EditProfileComponent = ({
   error,
   editingPassword,
   fieldValues,
-  department,
-  departmentEnabled,
-  organization,
-  organizationEnabled,
-  site,
-  siteEnabled,
+  arloicommenterEnabled,
+  arloicommenter,
   defaultKappDisplayEnabled,
-  manager,
-  managerEnabled,
+  eloicommenter,
+  eloicommenterEnabled,
   handleChangeManagerClick,
   handleFieldChange,
   handleSubmit,
@@ -96,6 +92,30 @@ export const EditProfileComponent = ({
                     name="phoneNumber"
                     onChange={handleFieldChange}
                     value={fieldValues.phoneNumber}
+                  />
+                </div>
+                <div className="form-group required col-md-6">
+                  <label htmlFor="scaName">
+                    <I18n>SCA Name</I18n>
+                  </label>
+                  <input
+                    type="text"
+                    id="scaName"
+                    name="scaName"
+                    onChange={handleFieldChange}
+                    value={fieldValues.scaName}
+                  />
+                </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="heraldicTitle">
+                    <I18n>Heraldic Title</I18n>
+                  </label>
+                  <input
+                    type="text"
+                    id="heraldicTitle"
+                    name="heraldicTitle"
+                    onChange={handleFieldChange}
+                    value={fieldValues.heraldicTitle}
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -235,72 +255,35 @@ export const EditProfileComponent = ({
               </div>
             </form>
           </section>
-          {(managerEnabled ||
-            siteEnabled ||
-            departmentEnabled ||
-            organizationEnabled) && (
+          {(eloicommenterEnabled || arloicommenterEnabled) && (
             <section>
               <h2 className="section__title">User Attributes</h2>
               <div className="user-attributes-wrapper">
                 <table className="table table--user-attributes">
                   <tbody>
-                    {managerEnabled && (
+                    {eloicommenterEnabled && (
                       <tr>
                         <td className="name">
-                          <I18n>Manager</I18n>
+                          <I18n>ELoI Commenter</I18n>
                         </td>
                         <td>
-                          {manager || (
+                          {eloicommenter || (
                             <em>
-                              <I18n>No Manager</I18n>
-                            </em>
-                          )}
-                          <button
-                            className="btn btn-link btn-sm"
-                            onClick={handleChangeManagerClick}
-                          >
-                            <I18n>Change Manager</I18n>
-                          </button>
-                        </td>
-                      </tr>
-                    )}
-                    {departmentEnabled && (
-                      <tr>
-                        <td className="name">
-                          <I18n>Department</I18n>
-                        </td>
-                        <td>
-                          {department || (
-                            <em>
-                              <I18n>No Department</I18n>
+                              <I18n>false</I18n>
                             </em>
                           )}
                         </td>
                       </tr>
                     )}
-                    {organizationEnabled && (
+                    {arloicommenterEnabled && (
                       <tr>
                         <td className="name">
-                          <I18n>Organization</I18n>
+                          <I18n>ARLoI Commenter</I18n>
                         </td>
                         <td>
-                          {organization || (
+                          {arloicommenter || (
                             <em>
-                              <I18n>No Organization</I18n>
-                            </em>
-                          )}
-                        </td>
-                      </tr>
-                    )}
-                    {siteEnabled && (
-                      <tr>
-                        <td className="name">
-                          <I18n>Site</I18n>
-                        </td>
-                        <td>
-                          {site || (
-                            <em>
-                              <I18n>No Site</I18n>
+                              <I18n>false</I18n>
                             </em>
                           )}
                         </td>
@@ -374,6 +357,12 @@ const buildProfile = (fieldValues, profile) => {
   profileAttributesMap['Phone Number'] = fieldValues.phoneNumber
     ? [fieldValues.phoneNumber]
     : [];
+  profileAttributesMap['Heraldic Title'] = fieldValues.heraldicTitle
+    ? [fieldValues.heraldicTitle]
+    : [];
+  profileAttributesMap['SCA Name'] = fieldValues.scaName
+    ? [fieldValues.scaName]
+    : [];
   profileAttributesMap['Default Kapp Display'] = fieldValues.defaultKappDisplay
     ? [fieldValues.defaultKappDisplay]
     : [];
@@ -395,6 +384,8 @@ const translateProfileToFieldValues = profile => ({
   newPassword: '',
   confirmPassword: '',
   phoneNumber: Utils.getProfileAttributeValue(profile, 'Phone Number', ''),
+  heraldicTitle: Utils.getProfileAttributeValue(profile, 'Heraldic Title', ''),
+  scaName: Utils.getProfileAttributeValue(profile, 'SCA Name', ''),
   defaultKappDisplay: Utils.getProfileAttributeValue(
     profile,
     'Default Kapp Display',
@@ -435,30 +426,16 @@ const openChangeManagerForm = ({
 const selectAttributes = profile =>
   profile
     ? {
-        departmentEnabled: Utils.hasAttributeDefinition(
+        eloicommenterEnabled: Utils.hasAttributeDefinition(
           profile.space.userAttributeDefinitions,
-          'Department',
+          'ELoI Commenter',
         ),
-        department: Utils.getAttributeValue(profile, 'Department'),
-        managerEnabled: Utils.hasAttributeDefinition(
+        eloicommenter: Utils.getAttributeValue(profile, 'ELoI Commenter'),
+        arloicommenterEnabled: Utils.hasAttributeDefinition(
           profile.space.userAttributeDefinitions,
-          'Manager',
+          'ARLoI Commenter',
         ),
-        manager: Utils.getAttributeValue(profile, 'Manager'),
-        organizationEnabled: Utils.hasAttributeDefinition(
-          profile.space.userAttributeDefinitions,
-          'Organization',
-        ),
-        organization: Utils.getAttributeValue(profile, 'Organization'),
-        siteEnabled: Utils.hasAttributeDefinition(
-          profile.space.userAttributeDefinitions,
-          'Site',
-        ),
-        site: Utils.getAttributeValue(profile, 'Site'),
-        defaultKappDisplayEnabled: Utils.hasAttributeDefinition(
-          profile.space.userProfileAttributeDefinitions,
-          'Default Kapp Display',
-        ),
+        arloicommenter: Utils.getAttributeValue(profile, 'ARLoI Commenter'),
         defaultKappDisplay: Utils.getAttributeValue(
           { attributes: profile.profileAttributes },
           'Default Kapp Display',

@@ -179,7 +179,7 @@
     display: inline-flex;
   }
   p {
-    color: $gray50;
+    color: $gray80;
     font-size: 1rem;
     line-height: 1.5rem;
     margin-bottom: 0;
@@ -224,7 +224,7 @@
       }
     }
     p {
-      color: $gray50;
+      color: $gray80;
       font-size: 0.75rem;
       line-height: 1.125rem;
       margin-bottom: 0;
@@ -245,7 +245,7 @@
       font-family: $font-family-sans-serif;
       word-break: keep-all;
       white-space: pre-wrap;
-      color: $gray50;
+      color: $gray80;
       font-size: 0.75rem;
       line-height: 1.125rem;
       &.text-truncate {

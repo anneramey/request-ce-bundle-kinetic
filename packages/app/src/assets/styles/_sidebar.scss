@@ -3,7 +3,7 @@
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 .sidebar {
-  background-color: $gray3;
+  background-color: $green-pale;
   border-right: 1px solid $gray16;
   min-height: calc(100vh - 160px);
   @supports not (-webkit-overflow-scrolling: touch) {
@@ -41,7 +41,7 @@
     z-index: 0;
     // Group Title
     h1 {
-      color: $blue-lake;
+      color: $green-dark;
       display: flex;
       align-items: center;
       line-height: 1;
@@ -55,9 +55,9 @@
         line-height: normal;
         margin-left: auto;
         text-transform: none;
-        color: $gray50;
+        color: $gray80;
         &:hover {
-          color: $blue-lake;
+          color: $green-dark;
         }
       }
       // Group Title Button color
@@ -71,7 +71,7 @@
     }
     .nav-link {
       border-left: 3px solid $gray3;
-      color: $gray50;
+      color: $gray80;
       line-height: normal;
       display: flex;
       align-items: center;
@@ -85,8 +85,8 @@
       }
       &.active,
       &:hover {
-        border-left-color: $blue-lake;
-        color: $blue-lake;
+        border-left-color: $tertiary;
+        color: $tertiary;
       }
     }
     .empty-state {
