@@ -34,3 +34,6 @@ require('bootstrap-select/dist/js/bootstrap-select');
 require('./lib/kd-typeahead/kd-typeahead');
 require('./lib/kd-dataviewer/kd-dataviewer');
 require('./lib/bundle/helpers');
+
+require('./lib/quill/quill.snow.css'); // CommonJS
+require('./lib/quill/quill.js'); // CommonJS
