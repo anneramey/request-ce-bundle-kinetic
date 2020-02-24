@@ -4,6 +4,7 @@ import { connect } from '../../redux/store';
 import { compose, lifecycle, withHandlers, withState } from 'recompose';
 import { actions } from '../../redux/modules/submissions';
 import { actions as CommentaryActions } from '../../redux/modules/commentaryApp';
+import { actions as submissionActions } from '../../redux/modules/submission';
 import { push } from 'connected-react-router';
 import { createSubmission } from '@kineticdata/react';
 import { RequestCard } from '../shared/RequestCard';
@@ -66,9 +67,7 @@ const SelectableCard = props => {
 };
 
 export const NewILoI = ({
-  loi,
   fetchNewSubmissions,
-  createNewLoi,
   kingdoms,
   currentKingdom,
   currentMonth,
@@ -76,13 +75,12 @@ export const NewILoI = ({
   setCurrentKingdom,
   setCurrentMonth,
   setCurrentYear,
-  navigate,
   handleCheckBoxSelect,
-  availableSelected,
   handleMoveSubILoi,
   handleListAction,
   localAvailableList,
   subIloiList,
+  handleCreateIloi,
 }) => {
   //console.log("state", state, submissions);
   // const fetchedSubmissions = submissions ? submissions : [];
@@ -295,15 +293,7 @@ export const NewILoI = ({
           <button
             type="button"
             className="btn btn-primary pull-right"
-            onClick={() =>
-              createNewLoi(
-                loi,
-                navigate,
-                currentKingdom,
-                currentMonth,
-                currentYear,
-              )
-            }
+            onClick={handleCreateIloi}
           >
             Create Draft ILoi
           </button>
@@ -363,6 +353,22 @@ const handleListAction = props => event => {
 };
 /*********************************************************************************/
 
+const handleCreateIloi = props => event => {
+  const subIloiIds = props.subIloiList.reduce((acc, submission) => {
+    acc.push(submission.id);
+    return acc;
+  }, []);
+  props.createNewLoi({
+    subIloiIds,
+    currentKingdom: 'test',
+    currentMonth: 'Feb',
+    currentYear: '2020',
+    callback: submissionId =>
+      props.navigate(`/kapps/commentary/loi/${submissionId}`),
+  });
+};
+
+// TODO remove this method and its refs from this file.
 const createNewLoi = ({
   loi,
   navigate,
@@ -414,7 +420,7 @@ const mapDispatchToProps = {
   setCurrentKingdom: CommentaryActions.setCurrentKingdom,
   setCurrentMonth: CommentaryActions.setCurrentMonth,
   setCurrentYear: CommentaryActions.setCurrentYear,
-  updateLoi: actions.updateLoi,
+  createNewLoi: submissionActions.createIloi,
 };
 
 export const NewILoIContainer = compose(
@@ -425,7 +431,8 @@ export const NewILoIContainer = compose(
   withState('localAvailableList', 'setlocalAvailableList', List()),
   withState('subIloiList', 'setSubIloiList', List()),
   withHandlers({
-    createNewLoi,
+    //createNewLoi,
+    handleCreateIloi,
     handleCheckBoxSelect,
     handleMoveSubILoi,
     handleListAction,

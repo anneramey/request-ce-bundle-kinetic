@@ -16,6 +16,9 @@ export const types = {
   FETCH_DISCUSSION_SUCCESS: ns('FETCH_DISCUSSION_SUCCESS'),
   SET_SEND_MESSAGE_MODAL_OPEN: ns('SET_SEND_MESSAGE_MODAL_OPEN'),
   SEND_MESSAGE_REQUEST: ns('SEND_MESSAGE_REQUEST'),
+  CREATE_ILOI: ns('CREATE_ILOI'),
+  CREATE_ILOI_SUCCESS: ns('CREATE_ILOI_SUCCESS'),
+  CREATE_ILOI_FAILURE: ns('CREATE_ILOI_FAILURE'),
 };
 
 export const actions = {
@@ -31,6 +34,8 @@ export const actions = {
   fetchDiscussionSuccess: withPayload(types.FETCH_DISCUSSION_SUCCESS),
   setSendMessageModalOpen: withPayload(types.SET_SEND_MESSAGE_MODAL_OPEN),
   sendMessageRequest: withPayload(types.SEND_MESSAGE_REQUEST),
+  createIloi: withPayload(types.CREATE_ILOI),
+  createIloiSuccess: withPayload(types.CREATE_ILOI_SUCCESS),
 };
 
 export const State = Record({
@@ -57,6 +62,8 @@ const reducer = (state = State(), { type, payload }) => {
       return state
         .set('isSendMessageModalOpen', payload.isOpen)
         .set('sendMessageType', payload.type || 'comment');
+    case types.CREATE_ILOI_SUCCESS:
+      return state;
     default:
       return state;
   }

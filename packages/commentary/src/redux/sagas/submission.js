@@ -20,8 +20,9 @@ import {
 } from '@kineticdata/react';
 import { addToast, addToastAlert } from 'common';
 import { Map, Seq } from 'immutable';
+// TODO: if this gets used it will need to be refactored to use relative route.
 import { push } from 'connected-react-router';
-
+import { navigate } from '@reach/router';
 import { actions, types } from '../modules/submission';
 import { getCancelFormConfig, getCommentFormConfig } from '../../utils';
 
@@ -250,10 +251,37 @@ export function* watchSubmissionPoller() {
   }
 }
 
+export function* createIloiSaga({ payload }) {
+  const appLocation = yield select(state => state.app.location);
+
+  const { submission, error } = yield call(createSubmission, {
+    kappSlug: 'commentary',
+    formSlug: 'iloi',
+    values: {
+      'JSON of Requests': JSON.stringify(payload.subIloiIds),
+      Kingdom: payload.currentKingdom,
+      Title:
+        payload.currentKingdom +
+        ' Internal Letter for ' +
+        payload.currentMonth +
+        ', ' +
+        payload.currentYear,
+    },
+    authAssumed: true,
+    completed: false,
+  });
+  // Component will redirect browser with provided Id
+  if (typeof payload.callback === 'function' && submission) {
+    payload.callback(submission.id);
+  }
+  // TODO: handler error case with toast
+}
+
 export function* watchSubmission() {
   yield takeEvery(types.FETCH_SUBMISSION_REQUEST, fetchSubmissionRequestSaga);
   yield takeEvery(types.CLONE_SUBMISSION_REQUEST, cloneSubmissionRequestSaga);
   yield takeEvery(types.DELETE_SUBMISSION_REQUEST, deleteSubmissionRequestSaga);
   yield takeEvery(types.FETCH_DISCUSSION_REQUEST, fetchDiscussionRequestSaga);
   yield takeEvery(types.SEND_MESSAGE_REQUEST, sendMessageRequestSaga);
+  yield takeEvery(types.CREATE_ILOI, createIloiSaga);
 }
