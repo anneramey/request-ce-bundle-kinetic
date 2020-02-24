@@ -266,6 +266,8 @@ export function* createIloiSaga({ payload }) {
         payload.currentMonth +
         ', ' +
         payload.currentYear,
+        Month: payload.currentMonth,
+        Year: payload.currentYear
     },
     authAssumed: true,
     completed: false,

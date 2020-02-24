@@ -19,6 +19,7 @@ const handleMonthChange = setCurrentMonth => e =>
   setCurrentMonth(e.target.value);
 
 const monthOptions = [
+  { value: '', label: 'None Selected' },
   { value: 'January', label: 'January' },
   { value: 'February', label: 'February' },
   { value: 'March', label: 'March' },
@@ -52,16 +53,22 @@ const yearOptions = [
 
 const SelectableCard = props => {
   return (
-    <div style={{ backgroundColor: 'white' }}>
-      <input
-        checked={props.submission.isChecked}
-        onChange={props.handleCheckBoxSelect}
-        type="checkbox"
-        value={props.submission.id}
-        data-list-name={props.listName}
-        data-func-name={props.listFuncName}
-      />
-      <RequestCard {...props} />
+    <div className="selectable-card">
+      <div className="row">
+      <div className="col-1">
+        <input
+          checked={props.submission.isChecked}
+          onChange={props.handleCheckBoxSelect}
+          type="checkbox"
+          value={props.submission.id}
+          data-list-name={props.listName}
+          data-func-name={props.listFuncName}
+        />
+      </div>
+        <div className="col-11">
+          <RequestCard {...props} />
+        </div>
+      </div>
     </div>
   );
 };
@@ -84,7 +91,11 @@ export const NewILoI = ({
 }) => {
   //console.log("state", state, submissions);
   // const fetchedSubmissions = submissions ? submissions : [];
-  //console.log('currentKingdom ', currentKingdom, currentMonth, currentYear);
+  const noKingdom = {'name':'None Selected'};
+  const allK = [...kingdoms, noKingdom]
+
+//  console.log('kingdoms ', typeof allK, allK);
+
   return (
     <Fragment>
       <PageTitle parts={[]} />
@@ -101,10 +112,7 @@ export const NewILoI = ({
               onChange={handleKingdomChange(setCurrentKingdom)}
               value={currentKingdom}
             >
-              <option value="">
-                <I18n>None Selected</I18n>
-              </option>
-              {kingdoms.map(kingdom => (
+              {allK.map(kingdom => (
                 <option value={kingdom.name} key={`${kingdom.name}`}>
                   {kingdom.name}
                 </option>
@@ -128,12 +136,9 @@ export const NewILoI = ({
               onChange={handleMonthChange(setCurrentMonth)}
               value={currentMonth}
             >
-              <option value="">
-                <I18n>None Selected</I18n>
-              </option>
               {monthOptions.map(month => (
-                <option value={month.label} key={`${month.label}`}>
-                  {month.value}
+                <option value={month.value} key={`${month.label}`}>
+                  {month.label}
                 </option>
               ))}
             </select>
@@ -174,6 +179,7 @@ export const NewILoI = ({
               value="localAvailableList"
               data-action="add"
               data-func-name="setlocalAvailableList"
+              className="btn btn-primary"
             >
               Select All
             </button>
@@ -182,8 +188,9 @@ export const NewILoI = ({
               value="localAvailableList"
               data-action="remove"
               data-func-name="setlocalAvailableList"
+              className="btn btn-primary"
             >
-              Remove All
+              Remove Selections
             </button>
             <div className="page-title">
               <div className="page-title__wrapper">
@@ -221,6 +228,7 @@ export const NewILoI = ({
               data-source-func-name="setlocalAvailableList"
               data-dest-name="subIloiList"
               data-dest-func-name="setSubIloiList"
+              className="btn btn-primary"
             >
               <i className="fa fa-chevron-right" aria-hidden="true" />
               <i className="fa fa-chevron-right" aria-hidden="true" />
@@ -231,6 +239,7 @@ export const NewILoI = ({
               data-source-func-name="setSubIloiList"
               data-dest-name="localAvailableList"
               data-dest-func-name="setlocalAvailableList"
+              className="btn btn-primary"
             >
               <i className="fa fa-chevron-left" aria-hidden="true" />
               <i className="fa fa-chevron-left" aria-hidden="true" />
@@ -242,6 +251,7 @@ export const NewILoI = ({
               value="subIloiList"
               data-action="add"
               data-func-name="setSubIloiList"
+              className="btn btn-primary"
             >
               Select All
             </button>
@@ -250,8 +260,9 @@ export const NewILoI = ({
               value="subIloiList"
               data-action="remove"
               data-func-name="setSubIloiList"
+              className="btn btn-primary"
             >
-              Remove All
+              Remove Selections
             </button>
             <div className="page-title">
               <div className="page-title__wrapper">
@@ -354,15 +365,16 @@ const handleListAction = props => event => {
 /*********************************************************************************/
 
 const handleCreateIloi = props => event => {
+  //console.log("create",props);
   const subIloiIds = props.subIloiList.reduce((acc, submission) => {
     acc.push(submission.id);
     return acc;
   }, []);
   props.createNewLoi({
     subIloiIds,
-    currentKingdom: 'test',
-    currentMonth: 'Feb',
-    currentYear: '2020',
+    currentKingdom: props.currentKingdom,
+    currentMonth: props.currentMonth,
+    currentYear: props.currentYear,
     callback: submissionId =>
       props.navigate(`/kapps/commentary/loi/${submissionId}`),
   });
@@ -409,8 +421,8 @@ const mapStateToProps = state => ({
   loi: state.submissions.loi,
   kingdoms: state.commentaryApp.kingdoms,
   thisstate: state,
-  currentKingdom: state.commentaryApp.currentKingdom,
-  currentMonth: state.commentaryApp.currentMonth,
+  currentKingdom: state.commentaryApp.currentKingdom ? state.commentaryApp.currentKingdom: 'None Selected',
+  currentMonth: state.commentaryApp.currentMonth ? state.commentaryApp.currentMonth: '',
   currentYear: state.commentaryApp.currentYear,
 });
 
