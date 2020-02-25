@@ -521,6 +521,7 @@
 }
 .ql-snow {
   box-sizing: border-box;
+  background-color: #FFF;
 }
 .ql-snow * {
   box-sizing: border-box;
