@@ -8,6 +8,8 @@ import { watchSubmission, watchSubmissionPoller } from './sagas/submission';
 import { watchSubmissionCounts } from './sagas/submissionCounts';
 import { watchSettingsForms } from './sagas/settingsForms';
 import { watchSettingsCategories } from './sagas/settingsCategories';
+import { watchSettingsDatastore } from './sagas/settingsDatastore';
+
 
 export default function*() {
   yield all([
@@ -20,5 +22,6 @@ export default function*() {
     watchSubmissionCounts(),
     watchSettingsForms(),
     watchSettingsCategories(),
+    watchSettingsDatastore(),
   ]);
 }

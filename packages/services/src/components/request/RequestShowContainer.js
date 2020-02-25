@@ -1,6 +1,7 @@
 import { compose, lifecycle, withState, withHandlers } from 'recompose';
 import { selectDiscussionsEnabled } from 'common/src/redux/modules/common';
 import { actions } from '../../redux/modules/submission';
+import { actions as SubmissionsActions} from '../../redux/modules/submissions';
 import { connect } from '../../redux/store';
 
 import { RequestShow } from './RequestShow';
@@ -20,6 +21,11 @@ export const mapStateToProps = (state, props) => ({
   kappSlug: state.app.kappSlug,
   appLocation: state.app.location,
   discussionsEnabled: selectDiscussionsEnabled(state),
+  comments: state.submissions.comments,
+  spaceAdmin: state.app.profile.spaceAdmin ? true : false,
+  editor: state.app.profile.username,
+  startingValues: state.submission.data ? {'Originating ID':state.submission.data.id, 'Parent ID':state.submission.data.id}: {'Originating ID':'', 'Parent ID':''},
+
 });
 
 export const mapDispatchToProps = {
@@ -28,6 +34,7 @@ export const mapDispatchToProps = {
   startPoller: actions.startSubmissionPoller,
   stopPoller: actions.stopSubmissionPoller,
   fetchDiscussion: actions.fetchDiscussionRequest,
+  fetchComments: SubmissionsActions.fetchComments,
 };
 
 const enhance = compose(
@@ -41,6 +48,7 @@ const enhance = compose(
       this.props.fetchSubmission(this.props.submissionId);
       this.props.fetchDiscussion(this.props.submissionId);
       this.props.startPoller(this.props.submissionId);
+      this.props.fetchComments(this.props.submissionId);
     },
     componentWillUnmount() {
       this.props.clearSubmission();

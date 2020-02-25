@@ -7,6 +7,9 @@ import submissionReducer from './modules/submission';
 import submissionCountsReducer from './modules/submissionCounts';
 import settingsFormsReducer from './modules/settingsForms';
 import settingsCategoriesReducer from './modules/settingsCategories';
+import { reducer as errors } from './modules/errors';
+import { reducer as settingsDatastore } from './modules/settingsDatastore';
+
 
 export default {
   app,
@@ -18,4 +21,6 @@ export default {
   submissionCounts: submissionCountsReducer,
   settingsForms: settingsFormsReducer,
   settingsCategories: settingsCategoriesReducer,
+  settingsDatastore: settingsDatastore,
+  errors:errors,
 };

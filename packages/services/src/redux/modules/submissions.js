@@ -11,6 +11,9 @@ export const types = {
   FETCH_SUBMISSIONS_CURRENT: ns('FETCH_SUBMISSIONS_CURRENT'),
   FETCH_SUBMISSIONS_SUCCESS: ns('FETCH_SUBMISSIONS_SUCCESS'),
   FETCH_SUBMISSIONS_FAILURE: ns('FETCH_SUBMISSIONS_FAILURE'),
+  FETCH_COMMENTS: ns('FETCH_COMMENTS'),
+  FETCH_COMMENTS_SUCCESS: ns('FETCH_COMMENTS_SUCCESS'),
+  FETCH_COMMENTS_FAILURE: ns('FETCH_COMMENTS_FAILURE'),
 };
 
 export const actions = {
@@ -41,6 +44,9 @@ export const actions = {
     type: types.SET_SUBMISSIONS,
     payload: { submissions, nextPageToken },
   }),
+  fetchComments: withPayload(types.FETCH_COMMENTS),
+  fetchCommentsSuccess: withPayload(types.FETCH_COMMENTS_SUCCESS),
+  fetchCommentsFailure: withPayload(types.FETCH_COMMENTS_FAILURE),
 };
 
 export const State = Record({
@@ -52,6 +58,7 @@ export const State = Record({
   pageToken: null,
   nextPageToken: null,
   previousPageTokens: List(),
+  comments: [],
 });
 
 const reducer = (state = State(), { type, payload = {} }) => {
@@ -86,6 +93,13 @@ const reducer = (state = State(), { type, payload = {} }) => {
         .set('paging', false);
     case types.FETCH_SUBMISSIONS_FAILURE:
       return state.set('error', payload).set('paging', false);
+    case types.FETCH_COMMENTS:
+      return state.set('error', null);
+    case types.FETCH_COMMENTS_SUCCESS:
+      //console.log(payload);
+      return state.set('comments', payload.submissions);
+    case types.FETCH_COMMENTS_FAILURE:
+      return state.set('error', payload);
     default:
       return state;
   }

@@ -13,6 +13,7 @@ import { RequestDiscussion } from './RequestDiscussion';
 import { RequestActivityList } from './RequestActivityList';
 import { CancelButtonContainer } from './CancelButton';
 import { CommentButtonContainer } from './CommentButton';
+import { CommentSubmission } from './CommentDisplay';
 import { CloneButtonContainer } from './CloneButton';
 import { FeedbackButtonContainer } from './FeedbackButton';
 import { ViewDiscussionButtonContainer } from './ViewDiscussionButton';
@@ -26,9 +27,17 @@ import {
 } from '../../utils';
 import { ReviewRequest } from './ReviewRequest';
 import { PageTitle } from '../shared/PageTitle';
-
+import { CoreForm } from '@kineticdata/react';
 import { I18n } from '@kineticdata/react';
 import { isActiveClass } from '../../utils';
+import {
+  addSuccess,
+  addError,
+} from 'common';
+
+
+const globals = import('common/globals');
+
 
 const getIcon = form =>
   CommonUtils.getAttributeValue(
@@ -154,6 +163,22 @@ const CompletedInItem = ({ submission }) => {
   );
 };
 
+export const getRandomKey = () =>
+  Math.floor(Math.random() * (100000 - 100 + 1)) + 100;
+
+export const handleError = props => response => {
+  addError(response.error, 'Error');
+};
+
+export const handleCreated = props => (response, actions) => {
+  console.log(response, actions);
+  addSuccess(
+    `Successfully created submission (${response.submission.handle})`,
+    'Submission Created!',
+  );
+  props.setFormKey(getRandomKey());
+};
+
 export const RequestShow = ({
   submission,
   error,
@@ -166,55 +191,13 @@ export const RequestShow = ({
   closeDiscussion,
   kappSlug,
   appLocation,
+  comments,
+  spaceAdmin,
+  editor,
+  startingValues,
 }) => (
-  <div className="page-container page-container--panels page-container--color-bar">
-    <div className="page-panel page-panel--three-fifths">
-      <PageTitle parts={[submission && `#${submission.handle}`, 'Requests']} />
-      {sendMessageModalOpen && <SendMessageModal submission={submission} />}
-      <div className="page-panel__header">
-        <Link
-          className="nav-return"
-          to={`${appLocation}/requests/${listType || ''}`}
-        >
-          <span className="fa fa-fw fa-chevron-left" />
-          <I18n>{listType || 'All'} Requests</I18n>
-        </Link>
-        {!error &&
-          submission && (
-            <div className="submission__meta">
-              <div className="data-list-row">
-                <StatusItem submission={submission} />
-                <div className="data-list-row__col">
-                  <dl>
-                    <dt>
-                      <I18n>Confirmation #</I18n>
-                    </dt>
-                    <dd>{submission.handle}</dd>
-                  </dl>
-                </div>
-                <DisplayDateItem submission={submission} />
-                <ServiceOwnerItem submission={submission} />
-                <EstCompletionItem submission={submission} />
-                <CompletedInItem submission={submission} />
-                <div className="col-lg-auto btn-group-col">
-                  <ViewDiscussionButtonContainer
-                    openDiscussion={openDiscussion}
-                  />
-                  <CloneButtonContainer submission={submission} />
-                  {submission.coreState === constants.CORE_STATE_SUBMITTED &&
-                    !discussion && (
-                      <CommentButtonContainer submission={submission} />
-                    )}
-                  {submission.coreState === constants.CORE_STATE_CLOSED && (
-                    <FeedbackButtonContainer submission={submission} />
-                  )}
+  <div className="page-container page-container--color-bar">
 
-                  <CancelButtonContainer submission={submission} />
-                </div>
-              </div>
-            </div>
-          )}
-      </div>
       <div className="page-panel__body">
         {error && (
           <ErrorMessage
@@ -235,11 +218,11 @@ export const RequestShow = ({
                   <I18n
                     context={`kapps.${kappSlug}.forms.${submission.form.slug}`}
                   >
-                    {submission.form.name}
+                    {submission.label}
                   </I18n>
                 </h1>
                 {submission.form.name !== submission.label && (
-                  <p>{submission.label}</p>
+                  <p>{submission.form.name}</p>
                 )}
               </div>
 
@@ -290,17 +273,99 @@ export const RequestShow = ({
                   )}
                 </div>
               </div>
+              <div id="commentSection" className="request-comments">
+              <h2>Comments</h2>
+              {comments.length > 0 ?
+              <table className="comments-table">
+                <thead>
+                  <tr>
+                    <th width="25%">Commenter</th>
+                    <th width="75%">Comment</th>
+                    <th width="15%">Attachment(s)</th>
+                    <th width="10%">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {comments.map(comment => (
+                    <tr key={comment.id}>
+                      <td>{comment.values['Commenter']}</td>
+                      <td>{comment.values['Comment']}</td>
+                      <td>{comment.values['Attachment'].length ?
+                      comment.values['Attachment'].map(attachment => (
+                        <div key={attachment.name} >
+                        <a href={attachment.link}>{attachment.name}</a>
+                        <br />
+                        </div>
+                       )
+                      )
+                      :''}
+                      </td>
+                      {(spaceAdmin || editor === comment.submittedBy) && (
+                        <td>
+                          <div className="btn-group btn-group-sm">
+                            <Link
+                              className="btn btn-primary"
+                              to={`/settings/datastore/comments/${comment.id}`}
+                            >
+                              <span className="fa fa-fw fa-pencil" />
+                            </Link>
+                          </div>
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              : "Be the first to enter a comment" }
+              <CoreForm
+                key={getRandomKey}
+                form="comments"
+                datastore
+                onCreated={handleCreated}
+                onSubmitted={handleCreated}
+                error={handleError}
+                globals={globals}
+                values={startingValues}
+              />
+              </div>
             </Fragment>
           )}
       </div>
+    <div className="page-panel page-panel--three-fifths">
+      <PageTitle parts={[submission && `#${submission.handle}`, 'Requests']} />
+      {sendMessageModalOpen && <SendMessageModal submission={submission} />}
+      <div className="page-panel__header">
+        <Link
+          className="nav-return"
+          to={`${appLocation}/requests/${listType || ''}`}
+        >
+          <span className="fa fa-fw fa-chevron-left" />
+          <I18n>{listType || 'All'} Requests</I18n>
+        </Link>
+        {!error &&
+          submission && (
+            <div className="submission__meta">
+              <div className="data-list-row">
+                <StatusItem submission={submission} />
+                <div className="data-list-row__col">
+                  <dl>
+                    <dt>
+                      <I18n>Confirmation #</I18n>
+                    </dt>
+                    <dd>{submission.handle}</dd>
+                  </dl>
+                </div>
+                <DisplayDateItem submission={submission} />
+                <ServiceOwnerItem submission={submission} />
+                <EstCompletionItem submission={submission} />
+                <CompletedInItem submission={submission} />
+                <div className="col-lg-auto btn-group-col">
+                  <CancelButtonContainer submission={submission} />
+                </div>
+              </div>
+            </div>
+          )}
+      </div>
     </div>
-    {submission &&
-      discussion && (
-        <RequestDiscussion
-          discussion={discussion}
-          viewDiscussionModal={viewDiscussionModal}
-          closeDiscussion={closeDiscussion}
-        />
-      )}
   </div>
 );

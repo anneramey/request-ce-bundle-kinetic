@@ -3,6 +3,8 @@ import { searchSubmissions, SubmissionSearch } from '@kineticdata/react';
 
 import * as constants from '../../constants';
 import { actions, types } from '../modules/submissions';
+import { addToastAlert } from 'common';
+
 
 export function* fetchSubmissionsRequestSaga({ payload }) {
   const kappSlug = yield select(state => state.app.kappSlug);
@@ -74,6 +76,47 @@ export function* fetchSubmissionsRequestSaga({ payload }) {
   }
 }
 
+export function* fetchCommentsSaga(action) {
+  const searcher = new SubmissionSearch(true)
+  .includes([
+    'details',
+    'values',
+    'form',
+    'form.attributes',
+    'form.kapp',
+    'form.kapp.attributes',
+    'form.kapp.space.attributes',
+  ]);;
+  const submissionId = action.payload;
+  searcher.index('values[Originating ID]');
+  searcher.eq('values[Originating ID]', submissionId);
+  //console.log(searcher);
+
+
+  const { submissions, nextPageToken = null, error } = yield call(
+    searchSubmissions,
+    {
+      search: searcher.build(),
+      datastore: true,
+      form: 'comments',
+    },
+  );
+
+  if (error) {
+    yield put(actions.fetchCommentsFailure(error));
+    addToastAlert({
+      title: 'Failed to load Comments.',
+      message: error.message,
+    });
+  } else {
+    yield put(
+      actions.fetchCommentsSuccess({
+        submissions,
+      }),
+    );
+  }
+}
+
 export function* watchSubmissions() {
   yield takeEvery(
     [
@@ -84,4 +127,6 @@ export function* watchSubmissions() {
     ],
     fetchSubmissionsRequestSaga,
   );
+  yield takeEvery(types.FETCH_COMMENTS, fetchCommentsSaga);
+
 }
