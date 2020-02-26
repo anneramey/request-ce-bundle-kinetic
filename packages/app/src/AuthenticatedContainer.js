@@ -12,6 +12,7 @@ import { actions as authActions } from './redux/modules/auth';
 import logoImage from './assets/images/login-background.png';
 import logoName from './assets/images/login-name.png';
 import { WallySpinner } from 'common';
+import { HeraldicSpinner } from 'common';
 import { ResetTokenForm } from './components/authentication/ResetTokenForm';
 import { ResetPasswordForm } from './components/authentication/ResetPasswordForm';
 import { LoginForm } from './components/authentication/LoginForm';
@@ -42,7 +43,7 @@ const LoginLoading = ({ setToken }) => (
   <div className="login-container">
     <div className="login-wrapper">
       <div className="wally-loader-wrapper">
-        <WallySpinner />
+        <HeraldicSpinner />
         <RetrieveJwtIframe onSuccess={setToken} />
       </div>
     </div>
