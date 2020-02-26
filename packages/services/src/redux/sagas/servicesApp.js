@@ -18,7 +18,7 @@ export function* fetchAppDataRequestSaga() {
     call(fetchForms, {
       kappSlug,
       include: 'details,categorizations,attributes,kapp',
-      q: 'category = "home-page-services" AND status = "Active"',
+      q: 'type = "Service" AND status = "Active"',
       limit: 1000,
     }),
   ]);
