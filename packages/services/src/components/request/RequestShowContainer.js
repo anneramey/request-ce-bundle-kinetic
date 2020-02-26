@@ -1,7 +1,7 @@
 import { compose, lifecycle, withState, withHandlers } from 'recompose';
 import { selectDiscussionsEnabled } from 'common/src/redux/modules/common';
 import { actions } from '../../redux/modules/submission';
-import { actions as SubmissionsActions} from '../../redux/modules/submissions';
+import { actions as SubmissionsActions } from '../../redux/modules/submissions';
 import { connect } from '../../redux/store';
 
 import { RequestShow } from './RequestShow';
@@ -24,8 +24,12 @@ export const mapStateToProps = (state, props) => ({
   comments: state.submissions.comments,
   spaceAdmin: state.app.profile.spaceAdmin ? true : false,
   editor: state.app.profile.username,
-  startingValues: state.submission.data ? {'Originating ID':state.submission.data.id, 'Parent ID':state.submission.data.id}: {'Originating ID':'', 'Parent ID':''},
-
+  startingValues: state.submission.data
+    ? {
+        'Originating ID': state.submission.data.id,
+        'Parent ID': state.submission.data.id,
+      }
+    : { 'Originating ID': '', 'Parent ID': '' },
 });
 
 export const mapDispatchToProps = {

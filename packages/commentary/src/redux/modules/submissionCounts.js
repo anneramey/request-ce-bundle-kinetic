@@ -7,7 +7,6 @@ export const types = {
   FETCH_SUBMISSION_COUNTS_COMPLETE: ns('FETCH_SUBMISSION_COUNTS_COMPLETE'),
   FETCH_COMMENTS_COUNTS_REQUEST: ns('FETCH_COMMENTS_COUNTS_REQUEST'),
   FETCH_COMMENTS_COUNTS_COMPLETE: ns('FETCH_COMMENTS_COUNTS_COMPLETE'),
-
 };
 
 export const actions = {
@@ -17,9 +16,7 @@ export const actions = {
   fetchSubmissionCountsComplete: withPayload(
     types.FETCH_SUBMISSION_COUNTS_COMPLETE,
   ),
-  fetchCommentsCountsRequest: noPayload(
-    types.FETCH_COMMENTS_COUNTS_REQUEST,
-  ),
+  fetchCommentsCountsRequest: noPayload(types.FETCH_COMMENTS_COUNTS_REQUEST),
   fetchCommentsCountsComplete: withPayload(
     types.FETCH_COMMENTS_COUNTS_COMPLETE,
   ),

@@ -26,17 +26,17 @@ const buildSearch = (coreState, username) => {
   return searchBuilder.build();
 };
 
-
 export function* fetchCommentsCountsRequestSaga(action) {
   const submissionId = action.payload;
 
-  const searchBuilder = new SubmissionSearch()
-    .limit(constants.SUBMISSION_COUNT_LIMIT);
+  const searchBuilder = new SubmissionSearch().limit(
+    constants.SUBMISSION_COUNT_LIMIT,
+  );
 
   //Add some of the optional parameters to the search based on core state
 
-    searchBuilder.index('values[Originating ID]');
-    searchBuilder.eq('values[Originating ID]', submissionId);
+  searchBuilder.index('values[Originating ID]');
+  searchBuilder.eq('values[Originating ID]', submissionId);
 
   const [submissions] = yield all([
     call(searchSubmissions, {

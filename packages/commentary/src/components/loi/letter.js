@@ -36,29 +36,29 @@ export const Letter = ({
         </div>
         <h2>{loiTitle}</h2>
         <div className="letter__wrapper">
-        <div className="cards__wrapper cards__wrapper--requests">
-          {loiSubrequests.length > 0 ? (
-            loiSubrequests
-              .map((submission, index) => ({
-                submission,
-                index,
-                key: submission.id,
-                path: getSubmissionPath(
-                  '/kapps/services',
+          <div className="cards__wrapper cards__wrapper--requests">
+            {loiSubrequests.length > 0 ? (
+              loiSubrequests
+                .map((submission, index) => ({
                   submission,
-                  'review',
-                  'Open',
-                ),
-              }))
-              .map(props => <RequestCardLarge {...props} />)
-          ) : (
-            <div className="card card--empty-state">
-              <h1>There are no requests in this ILoI.</h1>
-            </div>
-          )}
+                  index,
+                  key: submission.id,
+                  path: getSubmissionPath(
+                    '/kapps/services',
+                    submission,
+                    'review',
+                    'Open',
+                  ),
+                }))
+                .map(props => <RequestCardLarge {...props} />)
+            ) : (
+              <div className="card card--empty-state">
+                <h1>There are no requests in this ILoI.</h1>
+              </div>
+            )}
+          </div>
+          <br />
         </div>
-        <br />
-      </div>
       </div>
     </Fragment>
   );

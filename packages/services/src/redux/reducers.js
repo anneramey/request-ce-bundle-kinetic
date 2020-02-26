@@ -10,7 +10,6 @@ import settingsCategoriesReducer from './modules/settingsCategories';
 import { reducer as errors } from './modules/errors';
 import { reducer as settingsDatastore } from './modules/settingsDatastore';
 
-
 export default {
   app,
   forms: formsReducer,
@@ -22,5 +21,5 @@ export default {
   settingsForms: settingsFormsReducer,
   settingsCategories: settingsCategoriesReducer,
   settingsDatastore: settingsDatastore,
-  errors:errors,
+  errors: errors,
 };

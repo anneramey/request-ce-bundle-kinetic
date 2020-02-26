@@ -19,7 +19,6 @@ const DisplayDateListItem = ({ submission }) => {
   );
 };
 
-
 const ClosedDateListItem = ({ submission }) =>
   submission.coreState === constants.CORE_STATE_CLOSED && (
     <div className="col-4">
@@ -34,8 +33,8 @@ export const RequestCard = props => (
   <div className="card card--request">
     <div className="row">
       <div className="col-6">
-        <Link to={props.path} >
-        <h1>{props.submission.values.SocietyName}</h1>
+        <Link to={props.path}>
+          <h1>{props.submission.values.SocietyName}</h1>
         </Link>
       </div>
       <div className="col-5">
@@ -46,21 +45,23 @@ export const RequestCard = props => (
       <div className="col-12">
         <RequestImgs submission={props.submission} />
       </div>
-      </div>
-      <div className="row">
+    </div>
+    <div className="row">
       <div className="col-7">
-      {props.submission.values.LoIBlazon || props.submission.values.Blazon ?
-        <dt>Blazon</dt>
-        : <dt></dt>
-      }
-        {props.submission.values.LoIBlazon ?
+        {props.submission.values.LoIBlazon || props.submission.values.Blazon ? (
+          <dt>Blazon</dt>
+        ) : (
+          <dt />
+        )}
+        {props.submission.values.LoIBlazon ? (
           <dd>{props.submission.values.LoIBlazon}</dd>
-          : <dd>{props.submission.values.Blazon}</dd>
-        }
+        ) : (
+          <dd>{props.submission.values.Blazon}</dd>
+        )}
       </div>
       <div className="col-5">
         <Link to={props.path} className="btn btn-secondary">
-        Update Blazon
+          Update Blazon
         </Link>
       </div>
     </div>
@@ -70,20 +71,20 @@ export const RequestCard = props => (
           <dt>Confirmation</dt>
           <dd>{props.submission.handle}</dd>
         </div>
-          <DisplayDateListItem submission={props.submission} />
+        <DisplayDateListItem submission={props.submission} />
 
-          <ClosedDateListItem submission={props.submission} />
-        </div>
-        <div className="row">
+        <ClosedDateListItem submission={props.submission} />
+      </div>
+      <div className="row">
         <div className="col-6">
           <Link to={props.path} className="btn btn-primary" target="_blank">
-          View Submission
+            View Submission
           </Link>
         </div>
         <div className="col-6">
-            <Link to={props.path} className="btn btn-primary" target="_blank">
+          <Link to={props.path} className="btn btn-primary" target="_blank">
             Add Comments
-            </Link>
+          </Link>
         </div>
       </div>
     </span>

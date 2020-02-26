@@ -10,7 +10,6 @@ import { watchSettingsForms } from './sagas/settingsForms';
 import { watchSettingsCategories } from './sagas/settingsCategories';
 import { watchSettingsDatastore } from './sagas/settingsDatastore';
 
-
 export default function*() {
   yield all([
     watchApp(),

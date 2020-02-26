@@ -19,7 +19,6 @@ const DisplayDateListItem = ({ submission }) => {
   );
 };
 
-
 const ClosedDateListItem = ({ submission }) =>
   submission.coreState === constants.CORE_STATE_CLOSED && (
     <div className="col">
@@ -34,8 +33,8 @@ export const RequestCardLarge = props => (
   <div className="card card--request">
     <div className="row">
       <div className="col-6">
-        <Link to={props.path} >
-        <h1>{props.submission.values.SocietyName}</h1>
+        <Link to={props.path}>
+          <h1>{props.submission.values.SocietyName}</h1>
         </Link>
       </div>
       <div className="col-4">
@@ -43,7 +42,7 @@ export const RequestCardLarge = props => (
       </div>
       <div className="col-2">
         <Link to={props.path} className="btn btn-primary">
-        Add Comments
+          Add Comments
         </Link>
       </div>
     </div>
@@ -52,18 +51,20 @@ export const RequestCardLarge = props => (
         <RequestImgs submission={props.submission} />
       </div>
       <div className="col-6">
-      {props.submission.values.LoIBlazon || props.submission.values.Blazon ?
-        <dt>Blazon</dt>
-        : <dt></dt>
-      }
-        {props.submission.values.LoIBlazon ?
+        {props.submission.values.LoIBlazon || props.submission.values.Blazon ? (
+          <dt>Blazon</dt>
+        ) : (
+          <dt />
+        )}
+        {props.submission.values.LoIBlazon ? (
           <dd>{props.submission.values.LoIBlazon}</dd>
-          : <dd>{props.submission.values.Blazon}</dd>
-        }
+        ) : (
+          <dd>{props.submission.values.Blazon}</dd>
+        )}
       </div>
       <div className="col-2">
         <Link to={props.path} className="btn btn-secondary">
-        Update Blazon
+          Update Blazon
         </Link>
       </div>
     </div>
@@ -79,11 +80,10 @@ export const RequestCardLarge = props => (
         <div className="col-3">
           <ClosedDateListItem submission={props.submission} />
         </div>
-        <div className="col-1">
-        </div>
+        <div className="col-1" />
         <div className="col-2">
           <Link to={props.path} className="btn btn-primary">
-          View Submission
+            View Submission
           </Link>
         </div>
       </div>

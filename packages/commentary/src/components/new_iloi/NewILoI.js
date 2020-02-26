@@ -199,6 +199,11 @@ export const NewILoI = ({
             </div>
             {localAvailableList.size > 0 ? (
               localAvailableList
+                .sort((a, b) =>
+                  a.values.SocietyName.toUpperCase().localeCompare(
+                    b.values.SocietyName.toUpperCase(),
+                  ),
+                )
                 .map((submission, index) => ({
                   submission,
                   index,
@@ -272,6 +277,11 @@ export const NewILoI = ({
             <div>
               {subIloiList.size > 0 ? (
                 subIloiList
+                  .sort((a, b) =>
+                    a.values.SocietyName.toUpperCase().localeCompare(
+                      b.values.SocietyName.toUpperCase(),
+                    ),
+                  )
                   .map((submission, index) => ({
                     submission,
                     index,
@@ -287,6 +297,7 @@ export const NewILoI = ({
                     listName: 'subIloiList',
                     listFuncName: 'setSubIloiList',
                   }))
+                  .sort()
                   .map(props => <SelectableCard {...props} />)
               ) : (
                 <div className="card card--empty-state">
@@ -315,7 +326,7 @@ export const NewILoI = ({
 };
 
 /***********************************************************************************
- * dThe following three functions manage the selection of subIloi's and the movement
+ * The following three functions manage the selection of subIloi's and the movement
  * of subIloi's between lists.  All function are generic and driven off the data
  * attributes of the events that triggered them.
  *
