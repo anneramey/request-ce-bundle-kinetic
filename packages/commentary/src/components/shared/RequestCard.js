@@ -60,7 +60,7 @@ export const RequestCard = props => (
         )}
       </div>
       <div className="col-5">
-        <Link to={props.path} className="btn btn-secondary">
+        <Link to={"/kapps/services/forms/update-blazon?values[Parent%20ID]="+props.submission.id} className="btn btn-secondary">
           Update Blazon
         </Link>
       </div>

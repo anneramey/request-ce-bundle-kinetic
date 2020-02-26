@@ -290,7 +290,7 @@ export const RequestShow = ({
                     <tr key={comment.id}>
                       <td>{comment.values['Commenter']}</td>
                       <td>{comment.values['Comment']}</td>
-                      <td>{comment.values['Attachment'].length ?
+                      <td>{comment.values['Attachment'] && comment.values['Attachment'].length ?
                       comment.values['Attachment'].map(attachment => (
                         <div key={attachment.name} >
                         <a href={attachment.link}>{attachment.name}</a>
