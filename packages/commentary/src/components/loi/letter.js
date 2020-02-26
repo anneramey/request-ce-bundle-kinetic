@@ -4,7 +4,7 @@ import { compose, lifecycle, withHandlers } from 'recompose';
 import { actions } from '../../redux/modules/submission';
 import { actions as SubmissionsActions } from '../../redux/modules/submissions';
 import { KappLink as Link, PageTitle } from 'common';
-import { RequestCard } from '../shared/RequestCard';
+import { RequestCardLarge } from '../shared/RequestCardLarge';
 import { updateSubmission } from '@kineticdata/react';
 import { getSubmissionPath } from '../../utils';
 
@@ -35,6 +35,7 @@ export const Letter = ({
           </div>
         </div>
         <h2>{loiTitle}</h2>
+        <div className="letter__wrapper">
         <div className="cards__wrapper cards__wrapper--requests">
           {loiSubrequests.length > 0 ? (
             loiSubrequests
@@ -49,7 +50,7 @@ export const Letter = ({
                   'Open',
                 ),
               }))
-              .map(props => <RequestCard {...props} />)
+              .map(props => <RequestCardLarge {...props} />)
           ) : (
             <div className="card card--empty-state">
               <h1>There are no requests in this ILoI.</h1>
@@ -57,6 +58,7 @@ export const Letter = ({
           )}
         </div>
         <br />
+      </div>
       </div>
     </Fragment>
   );

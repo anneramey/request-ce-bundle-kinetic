@@ -26,6 +26,33 @@ const buildSearch = (coreState, username) => {
   return searchBuilder.build();
 };
 
+
+export function* fetchCommentsCountsRequestSaga(action) {
+  const submissionId = action.payload;
+
+  const searchBuilder = new SubmissionSearch()
+    .limit(constants.SUBMISSION_COUNT_LIMIT);
+
+  //Add some of the optional parameters to the search based on core state
+
+    searchBuilder.index('values[Originating ID]');
+    searchBuilder.eq('values[Originating ID]', submissionId);
+
+  const [submissions] = yield all([
+    call(searchSubmissions, {
+      search: searchBuilder.build(),
+      datastore: true,
+      form: 'comments',
+    }),
+  ]);
+
+  yield put(
+    actions.fetchCommentsCountsComplete({
+      Count: submissions ? submissions.length : null,
+    }),
+  );
+}
+
 export function* fetchSubmissionCountsRequestSaga() {
   const kappSlug = yield select(state => state.app.kappSlug);
   const username = yield select(state => state.app.profile.username);

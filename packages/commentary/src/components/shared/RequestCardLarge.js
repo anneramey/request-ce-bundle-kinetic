@@ -8,7 +8,7 @@ import * as constants from '../../constants';
 const DisplayDateListItem = ({ submission }) => {
   const isDraft = submission.coreState === constants.CORE_STATE_DRAFT;
   return (
-    <div className="col-4">
+    <div className="col">
       <dt className="">{isDraft ? 'Created' : 'Submitted'}</dt>
       <dd className="">
         <TimeAgo
@@ -22,7 +22,7 @@ const DisplayDateListItem = ({ submission }) => {
 
 const ClosedDateListItem = ({ submission }) =>
   submission.coreState === constants.CORE_STATE_CLOSED && (
-    <div className="col-4">
+    <div className="col">
       <dt className="">Closed</dt>
       <dd className="">
         <TimeAgo timestamp={submission.closedAt} />
@@ -30,7 +30,7 @@ const ClosedDateListItem = ({ submission }) =>
     </div>
   );
 
-export const RequestCard = props => (
+export const RequestCardLarge = props => (
   <div className="card card--request">
     <div className="row">
       <div className="col-6">
@@ -38,17 +38,20 @@ export const RequestCard = props => (
         <h1>{props.submission.values.SocietyName}</h1>
         </Link>
       </div>
-      <div className="col-5">
+      <div className="col-4">
         <RequestType submission={props.submission} />
+      </div>
+      <div className="col-2">
+        <Link to={props.path} className="btn btn-primary">
+        Add Comments
+        </Link>
       </div>
     </div>
     <div className="row">
-      <div className="col-12">
+      <div className="col-4">
         <RequestImgs submission={props.submission} />
       </div>
-      </div>
-      <div className="row">
-      <div className="col-7">
+      <div className="col-6">
       {props.submission.values.LoIBlazon || props.submission.values.Blazon ?
         <dt>Blazon</dt>
         : <dt></dt>
@@ -58,7 +61,7 @@ export const RequestCard = props => (
           : <dd>{props.submission.values.Blazon}</dd>
         }
       </div>
-      <div className="col-5">
+      <div className="col-2">
         <Link to={props.path} className="btn btn-secondary">
         Update Blazon
         </Link>
@@ -66,24 +69,22 @@ export const RequestCard = props => (
     </div>
     <span className="meta">
       <div className="row">
-        <div className="col-4">
+        <div className="col-3">
           <dt>Confirmation</dt>
           <dd>{props.submission.handle}</dd>
         </div>
+        <div className="col-3">
           <DisplayDateListItem submission={props.submission} />
-
+        </div>
+        <div className="col-3">
           <ClosedDateListItem submission={props.submission} />
         </div>
-        <div className="row">
-        <div className="col-6">
-          <Link to={props.path} className="btn btn-primary" target="_blank">
+        <div className="col-1">
+        </div>
+        <div className="col-2">
+          <Link to={props.path} className="btn btn-primary">
           View Submission
           </Link>
-        </div>
-        <div className="col-6">
-            <Link to={props.path} className="btn btn-primary" target="_blank">
-            Add Comments
-            </Link>
         </div>
       </div>
     </span>
