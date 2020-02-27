@@ -5,8 +5,6 @@ import { compose, lifecycle, withHandlers, withState } from 'recompose';
 import { actions } from '../../redux/modules/submissions';
 import { actions as CommentaryActions } from '../../redux/modules/commentaryApp';
 import { actions as submissionActions } from '../../redux/modules/submission';
-import { push } from 'connected-react-router';
-import { createSubmission } from '@kineticdata/react';
 import { RequestCard } from '../shared/RequestCard';
 import { getSubmissionPath } from '../../utils';
 import { I18n } from '@kineticdata/react';
@@ -55,16 +53,16 @@ const SelectableCard = props => {
   return (
     <div className="selectable-card">
       <div className="row">
-      <div className="col-1">
-        <input
-          checked={props.submission.isChecked}
-          onChange={props.handleCheckBoxSelect}
-          type="checkbox"
-          value={props.submission.id}
-          data-list-name={props.listName}
-          data-func-name={props.listFuncName}
-        />
-      </div>
+        <div className="col-1">
+          <input
+            checked={props.submission.isChecked}
+            onChange={props.handleCheckBoxSelect}
+            type="checkbox"
+            value={props.submission.id}
+            data-list-name={props.listName}
+            data-func-name={props.listFuncName}
+          />
+        </div>
         <div className="col-11">
           <RequestCard {...props} />
         </div>
@@ -89,12 +87,8 @@ export const NewILoI = ({
   subIloiList,
   handleCreateIloi,
 }) => {
-  //console.log("state", state, submissions);
-  // const fetchedSubmissions = submissions ? submissions : [];
-  const noKingdom = {'name':'None Selected'};
-  const allK = [...kingdoms, noKingdom]
-
-//  console.log('kingdoms ', typeof allK, allK);
+  const noKingdom = { name: 'None Selected' };
+  const allK = [...kingdoms, noKingdom];
 
   return (
     <Fragment>
@@ -391,49 +385,17 @@ const handleCreateIloi = props => event => {
   });
 };
 
-// TODO remove this method and its refs from this file.
-const createNewLoi = ({
-  loi,
-  navigate,
-  currentKingdom,
-  currentMonth,
-  currentYear,
-  //  setError,
-}) => async e => {
-  //  e.preventDefault();
-  console.log('createNewLoi', loi, currentKingdom);
-  //const loiList = loi.map(submission => submission.id);
-  //try {
-  const newSubmission = await createSubmission({
-    kappSlug: 'commentary',
-    formSlug: 'iloi',
-    values: {
-      //  'JSON of Requests': JSON.stringify(loiList),
-      'JSON of Requests': [],
-      Kingdom: currentKingdom,
-      Title:
-        currentKingdom +
-        ' Internal Letter for ' +
-        currentMonth +
-        ', ' +
-        currentYear,
-      Month: currentMonth,
-      Year: currentYear,
-    },
-    authAssumed: true,
-    completed: false,
-  });
-
-  navigate(`/kapps/commentary/loi/${newSubmission.submission.id}`);
-};
-
 const mapStateToProps = state => ({
   available: state.submissions.available,
   loi: state.submissions.loi,
   kingdoms: state.commentaryApp.kingdoms,
   thisstate: state,
-  currentKingdom: state.commentaryApp.currentKingdom ? state.commentaryApp.currentKingdom: 'None Selected',
-  currentMonth: state.commentaryApp.currentMonth ? state.commentaryApp.currentMonth: '',
+  currentKingdom: state.commentaryApp.currentKingdom
+    ? state.commentaryApp.currentKingdom
+    : 'None Selected',
+  currentMonth: state.commentaryApp.currentMonth
+    ? state.commentaryApp.currentMonth
+    : '',
   currentYear: state.commentaryApp.currentYear,
 });
 

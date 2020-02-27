@@ -1,3 +1,4 @@
+import { Record } from 'immutable';
 import { Utils } from 'common';
 const { noPayload, withPayload } = Utils;
 const ns = Utils.namespaceBuilder('services/submissionCounts');
@@ -16,22 +17,27 @@ export const actions = {
   fetchSubmissionCountsComplete: withPayload(
     types.FETCH_SUBMISSION_COUNTS_COMPLETE,
   ),
-  fetchCommentsCountsRequest: noPayload(types.FETCH_COMMENTS_COUNTS_REQUEST),
+  fetchCommentsCountsRequest: withPayload(types.FETCH_COMMENTS_COUNTS_REQUEST),
   fetchCommentsCountsComplete: withPayload(
     types.FETCH_COMMENTS_COUNTS_COMPLETE,
   ),
 };
 
-export const defaultState = {
-  data: {},
-};
+export const State = Record({
+  submissionCount: {},
+  commentCount: {},
+});
 
-const reducer = (state = defaultState, { type, payload }) => {
+const reducer = (state = State(), { type, payload }) => {
   switch (type) {
     case types.FETCH_SUBMISSION_COUNTS_COMPLETE:
-      return { data: payload };
+      // TODO: finish
+      return state.set('submissionCount', {});
     case types.FETCH_COMMENTS_COUNTS_COMPLETE:
-      return { data: payload };
+      return state.set('commentCount', {
+        ...state.commentCount,
+        [payload.submissionId]: payload.count,
+      });
     default:
       return state;
   }

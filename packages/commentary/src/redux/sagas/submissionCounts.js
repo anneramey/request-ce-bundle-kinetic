@@ -29,7 +29,7 @@ const buildSearch = (coreState, username) => {
 export function* fetchCommentsCountsRequestSaga(action) {
   const submissionId = action.payload;
 
-  const searchBuilder = new SubmissionSearch().limit(
+  const searchBuilder = new SubmissionSearch(true).limit(
     constants.SUBMISSION_COUNT_LIMIT,
   );
 
@@ -38,17 +38,16 @@ export function* fetchCommentsCountsRequestSaga(action) {
   searchBuilder.index('values[Originating ID]');
   searchBuilder.eq('values[Originating ID]', submissionId);
 
-  const [submissions] = yield all([
-    call(searchSubmissions, {
-      search: searchBuilder.build(),
-      datastore: true,
-      form: 'comments',
-    }),
-  ]);
+  const { submissions, error } = yield call(searchSubmissions, {
+    search: searchBuilder.build(),
+    datastore: true,
+    form: 'comments',
+  });
 
   yield put(
     actions.fetchCommentsCountsComplete({
-      Count: submissions ? submissions.length : null,
+      submissionId,
+      count: submissions ? submissions.length : null,
     }),
   );
 }
@@ -85,5 +84,9 @@ export function* watchSubmissionCounts() {
   yield takeEvery(
     types.FETCH_SUBMISSION_COUNTS_REQUEST,
     fetchSubmissionCountsRequestSaga,
+  );
+  yield takeEvery(
+    types.FETCH_COMMENTS_COUNTS_REQUEST,
+    fetchCommentsCountsRequestSaga,
   );
 }

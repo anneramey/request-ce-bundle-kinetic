@@ -3,6 +3,7 @@ import { selectDiscussionsEnabled } from 'common/src/redux/modules/common';
 import { actions } from '../../redux/modules/submission';
 import { actions as SubmissionsActions } from '../../redux/modules/submissions';
 import { connect } from '../../redux/store';
+import { addSuccess, addError } from 'common';
 
 import { RequestShow } from './RequestShow';
 
@@ -10,6 +11,23 @@ export const openDiscussion = props => () => props.setViewDiscussionModal(true);
 
 export const closeDiscussion = props => () =>
   props.setViewDiscussionModal(false);
+
+export const getRandomKey = () =>
+  Math.floor(Math.random() * (100000 - 100 + 1)) + 100;
+
+export const handleError = props => response => {
+  addError(response.error, 'Error');
+};
+
+export const handleCreated = props => (response, actions) => {
+  //console.log(response, actions);
+  props.fetchComments(props.submissionId);
+  addSuccess(
+    `Successfully created submission (${response.submission.handle})`,
+    'Submission Created!',
+  );
+  props.setFormKey(getRandomKey());
+};
 
 export const mapStateToProps = (state, props) => ({
   submission: state.submission.data,
@@ -47,6 +65,7 @@ const enhance = compose(
     mapDispatchToProps,
   ),
   withState('viewDiscussionModal', 'setViewDiscussionModal', false),
+  withState('formKey', 'setFormKey', getRandomKey),
   lifecycle({
     componentWillMount() {
       this.props.fetchSubmission(this.props.submissionId);
@@ -62,6 +81,8 @@ const enhance = compose(
   withHandlers({
     openDiscussion,
     closeDiscussion,
+    handleCreated,
+    handleError,
   }),
 );
 

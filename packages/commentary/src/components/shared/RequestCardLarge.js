@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from '../../redux/store';
+import { compose, lifecycle } from 'recompose';
 import { TimeAgo } from 'common';
 import { Link } from 'react-router-dom';
 import { RequestType } from './RequestType';
 import { RequestImgs } from './RequestImgs';
 import * as constants from '../../constants';
+import { actions as countsActions } from '../../redux/modules/submissionCounts';
 
 const DisplayDateListItem = ({ submission }) => {
   const isDraft = submission.coreState === constants.CORE_STATE_DRAFT;
@@ -29,7 +32,7 @@ const ClosedDateListItem = ({ submission }) =>
     </div>
   );
 
-export const RequestCardLarge = props => (
+export const RequestCardLargeComponent = props => (
   <div className="card card--request">
     <div className="row">
       <div className="col-6">
@@ -44,6 +47,7 @@ export const RequestCardLarge = props => (
         <Link to={props.path} className="btn btn-primary">
           Add Comments
         </Link>
+        <p>{props.commentCount}</p>
       </div>
     </div>
     <div className="row">
@@ -63,7 +67,13 @@ export const RequestCardLarge = props => (
         )}
       </div>
       <div className="col-2">
-        <Link to={"/kapps/services/forms/update-blazon?values[Parent%20ID]="+props.submission.id} className="btn btn-secondary">
+        <Link
+          to={
+            '/kapps/services/forms/update-blazon?values[Parent%20ID]=' +
+            props.submission.id
+          }
+          className="btn btn-secondary"
+        >
           Update Blazon
         </Link>
       </div>
@@ -90,3 +100,23 @@ export const RequestCardLarge = props => (
     </span>
   </div>
 );
+
+const mapStateToProps = (state, ownProps) => ({
+  commentCount: state.submissionCounts.commentCount[ownProps.submission.id],
+});
+
+const mapDispatchToProps = {
+  fetchCommentsCountsRequest: countsActions.fetchCommentsCountsRequest,
+};
+
+export const RequestCardLarge = compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+  lifecycle({
+    componentWillMount() {
+      this.props.fetchCommentsCountsRequest(this.props.submission.id);
+    },
+  }),
+)(RequestCardLargeComponent);
