@@ -11,6 +11,7 @@
 import jquery from 'jquery';
 import moment from 'moment';
 import underscore from 'underscore';
+import quill from 'quill';
 import 'bootstrap-select/dist/css/bootstrap-select.css';
 import './lib/kd-typeahead/kd-typeahead.css';
 import 'font-awesome/css/font-awesome.css';
@@ -21,6 +22,7 @@ import 'mdn-polyfills/Node.prototype.remove';
 window.$ = jquery;
 window.jQuery = jquery;
 window.moment = moment;
+window.Quill = quill;
 window._ = underscore;
 // This is required for kd-typeahead
 window.Bloodhound = require('typeahead.js');
@@ -36,4 +38,4 @@ require('./lib/kd-dataviewer/kd-dataviewer');
 require('./lib/bundle/helpers');
 
 require('./lib/quill/quill.snow.css'); // CommonJS
-require('./lib/quill/quill'); // CommonJS
+//require('./lib/quill/quill'); // CommonJS
