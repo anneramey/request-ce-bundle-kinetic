@@ -266,7 +266,10 @@ export const RequestShow = ({
                     {comments.map(comment => (
                       <tr key={comment.id}>
                         <td>{comment.values['Commenter']}</td>
-                        <td>{comment.values['Comment']}</td>
+                        <td><div
+                          dangerouslySetInnerHTML={{
+                            __html:comment.values['Comment']
+                          }}></div></td>
                         <td>
                           {comment.values['Attachment'] &&
                           comment.values['Attachment'].length
