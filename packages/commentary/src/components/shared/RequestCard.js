@@ -60,6 +60,7 @@ export const RequestCard = props => (
         )}
       </div>
       <div className="col-5">
+      {props.submission.values.Blazon ?
         <Link
           to={
             '/kapps/services/forms/update-blazon?values[Parent%20ID]=' +
@@ -69,6 +70,7 @@ export const RequestCard = props => (
         >
           Update Blazon
         </Link>
+        : ''}
       </div>
     </div>
     <span className="meta">
