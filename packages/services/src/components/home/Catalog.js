@@ -25,16 +25,6 @@ export const Catalog = ({
       <div className="page-container">
         <div className="page-panel">
           <div className="page-panel__header">
-            <div className="search-services-home">
-              <div className="search-services-home__wrapper">
-                <h1 className="text-truncate">
-                  <I18n>Welcome, how can we help?</I18n>
-                </h1>
-                <div className="search-box">
-                  <CatalogSearchContainer />
-                </div>
-              </div>
-            </div>
           </div>
           <div className="page-panel__body">
             <div className="column-container">
