@@ -35,7 +35,7 @@ const ClosedDateListItem = ({ submission }) =>
 export const RequestCardLargeComponent = props => (
   <div className="card card--request">
     <div className="row">
-      <div className="col-6">
+      <div className="col-5">
         <Link to={props.path}>
           <h1>{props.submission.values.SocietyName}</h1>
         </Link>
@@ -43,11 +43,13 @@ export const RequestCardLargeComponent = props => (
       <div className="col-4">
         <RequestType submission={props.submission} />
       </div>
+      <div className="col-1">
+        <dd className="comment-count">{props.commentCount} Existing<br/>Comments</dd>
+      </div>
       <div className="col-2">
         <Link to={props.path} className="btn btn-primary">
           Add Comments
         </Link>
-        <p>{props.commentCount}</p>
       </div>
     </div>
     <div className="row">

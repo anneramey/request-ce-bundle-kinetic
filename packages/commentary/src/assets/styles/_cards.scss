@@ -125,6 +125,11 @@
     font-size: 1rem;
   }
 }
+
+.card-small-text {
+  font-size: 0.55rem;
+  line-height: 0.675rem;
+}
 // Request Card
 .card--request {
   h1 {
@@ -162,6 +167,18 @@
       margin-bottom: 0;
     }
   }
+}
+
+dd {
+  font-size: 0.75rem;
+  margin-bottom: 0;
+  line-height: 0.875rem;
+}
+
+.comment-count {
+  float: left;
+  text-align: center;
+  margin-right: 2px;
 }
 
 .card-icon {
